@@ -1,7 +1,7 @@
 import "/src/styles.css";
 import { useState } from "react";
 
-export default function App() {
+export default function Comment() {
   // UseState to indicate the length of string user is typing
   const [indicate, setIndicate] = useState("");
 

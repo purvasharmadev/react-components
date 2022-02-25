@@ -1,12 +1,12 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
-import App from "./Components/Twitter";
+import Comment from "./Components/Twitter";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <Comment />
   </StrictMode>,
   rootElement
 );
