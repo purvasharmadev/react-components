@@ -5,6 +5,9 @@ export default function App() {
   // UseState to indicate the length of string user is typing
   const [indicate, setIndicate] = useState("");
 
+  // UseState for counter
+  const [textCount, setTextCount] = useState(0);
+
   // UseState to disable the textarea after the limit is reached
   const [disable, setDisable] = useState(false);
 
@@ -15,7 +18,13 @@ export default function App() {
   const [show, setShow] = useState("tweet");
 
   //UseState to change the input border for error
-  const [error, setError] = useState("red");
+  const [error, setError] = useState("black");
+  const borderColor = {
+    borderStyle: "solid",
+    borderWidth: "2px",
+    outline: "none",
+    borderColor: error
+  };
 
   // Function to handle on Change event
   function changeHandler(event) {
@@ -27,15 +36,25 @@ export default function App() {
   // Function to calculate the text length
   function calChar(text) {
     const len = text.length;
-    setIndicate(len > 10 ? disableTextArea : len);
+    setIndicate(
+      len >= 10
+        ? () => {
+            setDisable(true);
+            setIndicate("limit Reached !!");
+            setShow("go back");
+            setError("red");
+          }
+        : () => {
+            setError("");
+            setTextCount(len);
+          }
+    );
   }
 
   // Function to disable the textarea
-  function disableTextArea() {
-    setDisable(true);
-    setIndicate("sorry you have reached the limit!");
-    setShow("go back");
-  }
+  // function disableTextArea() {
+
+  // }
 
   return (
     <div className="App">
@@ -50,14 +69,12 @@ export default function App() {
         <br />
         {/* Solution */}
         <textarea
-          style={{
-            border: "2px",
-            borderStyle: "solid",
-            borderColor: { error }
-          }}
+          style={borderColor}
           onChange={changeHandler}
           disabled={disable}
         ></textarea>
+        {textCount}
+
         <p>
           {indicate}
           <button
