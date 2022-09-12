@@ -8,9 +8,6 @@ export default function Comment() {
   // UseState for counter
   const [textCount, setTextCount] = useState(0);
 
-  // UseState to disable the textarea after the limit is reached
-  const [disable, setDisable] = useState(false);
-
   // UseState to show the text on webpage
   const [tweet, setTweet] = useState("");
 
@@ -26,22 +23,13 @@ export default function Comment() {
     borderColor: error
   };
 
-  // Function to handle on Change event
-  function changeHandler(event) {
-    const text = event.target.value;
-    calChar(text);
-    setTweet(text);
-  }
-
   // Function to calculate the text length
   function calChar(text) {
     const len = text.length;
     setIndicate(
-      len >= 10
+      len > 10
         ? () => {
-            setDisable(true);
             setIndicate("limit Reached !!");
-            setShow("go back");
             setError("red");
           }
         : () => {
@@ -51,10 +39,14 @@ export default function Comment() {
     );
   }
 
-  // Function to disable the textarea
-  // function disableTextArea() {
-
-  // }
+  // Function to handle on Change event
+  function changeHandler(event) {
+    const text = event.target.value;
+    calChar(text);
+    text.length > 10
+      ? alert("you have exceded the word limit")
+      : setTweet(text);
+  }
 
   return (
     <div className="App">
@@ -68,18 +60,15 @@ export default function Comment() {
 
         <br />
         {/* Solution */}
-        <textarea
-          style={borderColor}
-          onChange={changeHandler}
-          disabled={disable}
-        ></textarea>
+        <textarea style={borderColor} onChange={changeHandler}></textarea>
         {textCount}
 
         <p>
           {indicate}
           <button
             onClick={(text) => {
-              setDisable(false);
+              // setDisable(false);
+
               setShow("tweet");
             }}
           >
